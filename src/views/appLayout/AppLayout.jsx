@@ -1,7 +1,6 @@
 import "./AppLayout.css";
 
 export default function AppLayout() {
-  // test
   return (
     <div className="main-container">
       <header>
