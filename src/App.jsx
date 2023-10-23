@@ -7,6 +7,8 @@ import MeetupInfo from "./views/meetupInfo/MeetupInfo";
 import AppLayout from "./views/appLayout/AppLayout";
 import "./App.css";
 
+// VI TESTAR IGEN
+
 function App() {
   return (
     <div className="App">
