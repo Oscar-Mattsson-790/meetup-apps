@@ -1,55 +1,61 @@
-.main-component-container {
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans:wght@200&family=PT+Sans&family=Playpen+Sans:wght@600&display=swap");
+
+.main-container {
   display: grid;
-  background-color: #15085f;
-  padding: 32px;
-  padding-top: 10px;
+  height: 100vh;
+  font-family: "Fira Sans", sans-serif;
+  font-family: "Playpen Sans", cursive;
+  font-family: "PT Sans", sans-serif;
+  background: rgb(228, 187, 231);
   grid-template-rows: auto 1fr auto;
   grid-template-areas:
     "header"
     "main"
     "footer";
-
-  > header {
-    grid-area: header;
-    display: flex;
-  }
-
-  > main {
-    grid-area: main;
-
-    overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  > footer {
-    grid-area: footer;
-  }
 }
 
-.signup-button {
-  margin-left: auto;
-  width: 86px;
-  height: 38px;
-  background-color: #15085f;
-  border: 1px solid #ff4910;
-  border-radius: 5px;
-  color: #ff4910;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  &:hover {
-    background-color: #e6e6e6;
-  }
-}
-
-.logo-container {
+.container-nav {
   display: flex;
+  justify-content: flex-end;
 
-  &__text {
-    color: #e6e6e6;
-    margin-left: 12px;
+  :last-child {
+    border-radius: 2px;
+    width: 60px;
+    height: 10px;
+    margin-bottom: 0;
+    font-style: italic;
   }
+}
+
+header {
+  grid-area: header;
+  background-color: #673970;
+  color: #fff;
+  padding: 10px 0;
+  text-align: center;
+  height: 50%;
+
+  :last-child {
+    margin: 0;
+    margin-bottom: 10px;
+  }
+}
+
+main {
+  grid-area: main;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+footer {
+  grid-area: footer;
+  background-color: #673970;
+  color: #fff;
+  padding: 10px 0;
+  text-align: center;
+  font-size: small;
+}
+
+img {
+  width: 50%;
 }
