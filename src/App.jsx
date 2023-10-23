@@ -7,8 +7,6 @@ import MeetupInfo from "./views/meetupInfo/MeetupInfo";
 import AppLayout from "./views/appLayout/AppLayout";
 import "./App.css";
 
-//test
-
 function App() {
   return (
     <div className="App">
