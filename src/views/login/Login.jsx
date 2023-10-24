@@ -2,10 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/button/Button";
 import InputField from "../../components/inputField/InputField";
+import { getLogin } from "../../api";
+
 import "./Login.css";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate("");
@@ -14,16 +16,17 @@ export default function Login() {
     e.preventDefault();
 
     const userDetails = {
-      email: email,
+      username: username,
       password: password,
     };
 
     console.log(userDetails);
 
+    getLogin(username, password);
     setMessage("Login successful!");
-    navigate("/listMeetup");
+    navigate("/meetups");
 
-    setEmail("");
+    setUsername("");
     setPassword("");
   };
 
@@ -33,10 +36,10 @@ export default function Login() {
         <form onSubmit={handleLogin}>
           <h2 className="login-title">Login</h2>
           <InputField
-            type="email"
-            placeholder="Enter email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="username"
+            placeholder="Enter username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
           <InputField
             type="password"

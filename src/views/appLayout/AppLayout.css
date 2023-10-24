@@ -33,11 +33,10 @@ header {
   color: #fff;
   padding: 10px 0;
   text-align: center;
-  height: 50%;
+  height: 100%;
 
   :last-child {
     margin: 0;
-    margin-bottom: 10px;
   }
 }
 
