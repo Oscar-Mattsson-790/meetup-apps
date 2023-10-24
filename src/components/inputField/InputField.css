@@ -1,0 +1,10 @@
+.custom-input {
+  padding: 8px 12px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #d3d3d3;
+  border-radius: 4px;
+  font-family: "Fira Sans", sans-serif;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 6px rgba(228, 187, 231, 0.3);
+}

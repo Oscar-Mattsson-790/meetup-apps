@@ -7,15 +7,13 @@ import MeetupInfo from "./views/meetupInfo/MeetupInfo";
 import AppLayout from "./views/appLayout/AppLayout";
 import "./App.css";
 
-// VI TESTAR IGEN
-
 function App() {
   return (
     <div className="App">
       <BrowserRouter basename="meetup-apps">
         <Routes>
-          <Route element={<AppLayout />}>
-            <Route path="/" element={<Login />} />
+          <Route path="/" element={<AppLayout />}>
+            <Route index element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="profile" element={<Profile />} />
             <Route path="listMeetup" element={<ListMeetup />} />
