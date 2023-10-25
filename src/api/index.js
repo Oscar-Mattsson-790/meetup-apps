@@ -3,12 +3,13 @@ export async function getMeetups() {
     const response = await fetch(`${import.meta.env.VITE_BASE_URL}/meetups`, {
       method: "GET",
     });
-    console.log(response);
 
     const result = await response.json();
     console.log(result);
+    return result;
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching meetups:", error);
+    throw error;
   }
 }
 
