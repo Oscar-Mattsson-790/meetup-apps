@@ -1,13 +1,8 @@
 .custom-button {
-  background-color: #673970;
   color: #fff;
   padding: 8px 15px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-family: "PT Sans", sans-serif;
-}
-
-.custom-button:hover {
-  background-color: #855b8a;
 }

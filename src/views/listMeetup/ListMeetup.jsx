@@ -1,10 +1,5 @@
-import { useEffect } from "react";
-import { getMeetups } from "../../api";
+import "./ListMeetup.css";
 
 export default function ListMeetup() {
-  useEffect(() => {
-    getMeetups();
-  }, []);
-
-  return <div></div>;
+  return <div className="list-page"></div>;
 }
