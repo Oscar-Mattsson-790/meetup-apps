@@ -4,8 +4,6 @@
   align-items: center;
   padding: 20px;
   background-color: #f2f2f2;
-  box-sizing: border-box;
-  overflow-y: auto;
 }
 
 .signup-container {
@@ -16,7 +14,7 @@
   width: 80%;
   max-width: 400px;
   padding: 30px;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: white;
   border-radius: 12px;
   box-shadow: 0 5px 10px rgb(0, 0, 0);
 }
@@ -27,14 +25,6 @@
   font-size: 24px;
   text-align: center;
   font-weight: 500;
-}
-
-.input-field {
-  margin-bottom: 20px;
-  width: 100%;
-  box-shadow: 0 3px 5px rgb(207, 32, 32);
-  font-size: 16px;
-  padding: 10px 12px;
 }
 
 .signup-message {
@@ -55,5 +45,13 @@
 }
 
 .signup-button:hover {
-  box-shadow: 0 3px 5px rgb(144, 116, 116);
+  background-color: darken(#e53935, 5%);
+  box-shadow: 0 3px 5px rgba(144, 116, 116, 0.6);
+}
+
+.danceLogoSignup {
+  width: 60%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
