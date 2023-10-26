@@ -5,6 +5,7 @@ import searchSymbol from "../../assets/searchSymbol.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import InputField from "../../components/inputField/InputField";
+import ArrowIcon from "../../assets/arrowIcon.svg";
 
 export default function AppLayout() {
   const location = useLocation();
@@ -41,7 +42,12 @@ export default function AppLayout() {
         </nav>
       </header>
       <main>
-        {path === "/meetups" && showInputField && <InputField />}
+        {path === "/meetups" && showInputField && (
+          <InputField
+            placeholder="Search for meetups or keywords"
+            iconSrc={ArrowIcon}
+          />
+        )}
         <Outlet />
       </main>
       <footer>

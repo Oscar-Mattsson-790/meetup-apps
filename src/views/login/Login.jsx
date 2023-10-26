@@ -4,6 +4,8 @@ import Button from "../../components/button/Button";
 import InputField from "../../components/inputField/InputField";
 import { getLogin } from "../../api";
 import danceLogo from "../../assets/danceLogoLogin.png";
+import lockIcon from "../../assets/lockIcon.svg";
+import userIcon from "../../assets/userIcon.svg";
 
 import "./Login.css";
 
@@ -13,7 +15,7 @@ export default function Login() {
   const [message, setMessage] = useState("");
   const navigate = useNavigate("");
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     const userDetails = {
@@ -23,12 +25,23 @@ export default function Login() {
 
     console.log(userDetails);
 
-    getLogin(username, password);
-    setMessage("Login successful!");
-    navigate("/meetups");
+    try {
+      const result = await getLogin(username, password);
+      console.log("View result: ", result);
 
-    setUsername("");
-    setPassword("");
+      console.log(result.sucess);
+      if (result && result.sucess) {
+        setMessage("Login successful!");
+        navigate("/meetups");
+        setUsername("");
+        setPassword("");
+      } else {
+        setMessage("Login failed! Please try again.");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      setMessage("An error occurred. Please try again.");
+    }
   };
 
   const handleSignupNavigate = () => {
@@ -40,18 +53,23 @@ export default function Login() {
       <div className="login-container">
         <img src={danceLogo} alt="login-logo" />
         <h2 className="login-title">MeetUp</h2>
+        <p className="login-subtitle">Join the community to get started</p>
         <form onSubmit={handleLogin}>
           <InputField
             type="text"
-            placeholder="Enter email"
+            iconSrc={userIcon}
+            placeholder="Enter your username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            required
           />
           <InputField
             type="password"
-            placeholder="Enter password"
+            iconSrc={lockIcon}
+            placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
           <Button className="login-button" type="submit">
             Login
@@ -61,7 +79,6 @@ export default function Login() {
         <div className="signup-prompt">
           Not a member?
           <span onClick={handleSignupNavigate} className="signup-link">
-            {" "}
             Signup
           </span>
         </div>
