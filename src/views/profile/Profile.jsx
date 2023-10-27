@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getMeetups } from "../../api";
 import profileIcon from "../../assets/meetupLogo.svg";
 import Button from "../../components/button/Button";
+import Modal from "../../components/modal/Modal";
 import "./Profile.css";
 
 function formatDate(dateString) {
@@ -16,10 +17,16 @@ function formatDate(dateString) {
   return new Date(dateString).toLocaleString(undefined, options);
 }
 
-function MeetupCard({ meetup, isPastMeetup }) {
+function MeetupCard({ meetup, isPastMeetup, storedFeedback }) {
   const [showFeedbacks, setShowFeedbacks] = useState(false);
-  const [showFeedbackInput, setShowFeedbackInput] = useState(false);
-  const [feedback, setFeedback] = useState("");
+  const [feedback, setFeedback] = useState(storedFeedback || "");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const saveFeedbackToLocalStorage = () => {
+    let feedbacks = JSON.parse(localStorage.getItem("meetupFeedbacks")) || {};
+    feedbacks[meetup.PK] = feedback;
+    localStorage.setItem("meetupFeedbacks", JSON.stringify(feedbacks));
+  };
 
   return (
     <div
@@ -32,38 +39,41 @@ function MeetupCard({ meetup, isPastMeetup }) {
       <p>{meetup.name}</p>
       <p>{formatDate(meetup.date)}</p>
 
-      {isPastMeetup ? (
+      {isPastMeetup && (
         <>
-          <Button onClick={() => setShowFeedbackInput(!showFeedbackInput)}>
-            Send Feedback
-          </Button>
-          {showFeedbackInput && (
-            <div className="textarea-icon-container">
-              <textarea
-                className="custom-textarea"
-                value={feedback}
-                onChange={(e) => setFeedback(e.target.value)}
-                placeholder="Enter your feedback"
-              />
-              <Button
-                onClick={() => {
-                  console.log(feedback);
-                  setShowFeedbackInput(false);
-                  setFeedback("");
-                }}
-              >
-                Submit
-              </Button>
-            </div>
+          {feedback && (
+            <div className="saved-feedback">Feedback: {feedback}</div>
           )}
+          <Button onClick={() => setIsModalOpen(true)}>Send Feedback</Button>
+
+          <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+            <textarea
+              className="custom-textarea"
+              value={feedback}
+              onChange={(e) => setFeedback(e.target.value)}
+              placeholder="Enter your feedback"
+            />
+            <Button
+              onClick={() => {
+                console.log(feedback);
+                saveFeedbackToLocalStorage();
+                setIsModalOpen(false);
+                setFeedback("");
+              }}
+            >
+              Submit
+            </Button>
+          </Modal>
         </>
-      ) : showFeedbacks ? (
+      )}
+
+      {!isPastMeetup && showFeedbacks && (
         <div className="meetup-details">
           <p>{meetup.description}</p>
           <p>City: {meetup.city}</p>
           <p>Location: {meetup.location}</p>
         </div>
-      ) : null}
+      )}
     </div>
   );
 }
@@ -75,10 +85,15 @@ export default function Profile() {
     username: "ogge1337",
   };
 
+  localStorage.setItem("loggedInUser", JSON.stringify(user));
+  const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser")) || {};
+
   const [registeredMeetups, setRegisteredMeetups] = useState([]);
   const [pastMeetups, setPastMeetups] = useState([]);
+  const [feedbacks, setFeedbacks] = useState({});
 
   useEffect(() => {
+    setFeedbacks(JSON.parse(localStorage.getItem("meetupFeedbacks")) || {});
     async function fetchMeetups() {
       try {
         const fetchedMeetups = await getMeetups();
@@ -111,17 +126,22 @@ export default function Profile() {
               src={profileIcon}
               alt="profile-icon"
             />
-            <h2>{user.username}</h2>
+            <h2>{loggedInUser.username}</h2>
           </div>
         </div>
         <div className="profile-info">
           <h2>Registered Meetups</h2>
-          {registeredMeetups.map((meetup, index) => (
-            <MeetupCard key={index} meetup={meetup} />
+          {registeredMeetups.map((meetup) => (
+            <MeetupCard key={meetup.PK} meetup={meetup} />
           ))}
           <h2>Past Meetups</h2>
           {pastMeetups.map((meetup) => (
-            <MeetupCard key={meetup.PK} meetup={meetup} isPastMeetup={true} />
+            <MeetupCard
+              key={meetup.PK}
+              meetup={meetup}
+              isPastMeetup={true}
+              storedFeedback={feedbacks[meetup.PK]}
+            />
           ))}
         </div>
       </div>
