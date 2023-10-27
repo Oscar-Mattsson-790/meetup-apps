@@ -1,0 +1,48 @@
+  .meetup-info {
+    width: 100%;
+    background-color: #ffd8dd;
+    margin: 15px 0;
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* .meetup-info:hover {
+    box-shadow: 0 5px 10px rgb(0, 0, 0);
+  } */
+
+  .info-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .detail-info {
+    margin-top: 1.2rem;
+    margin-bottom: 1.5rem;
+    background-color: #ffd8dd;
+    border-radius: 10%;
+    padding: 3px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .topic {
+    font-weight: bold;
+    font-size: 12px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+
+  .location, .date, .tickets {
+    font-weight: lighter;
+  }
+
+  .bookingBtn {
+    width: 100%;
+    background-color: #e53935;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
