@@ -29,6 +29,8 @@ export default function Login() {
       const result = await getLogin(username, password);
       console.log("View result: ", result);
 
+      localStorage.setItem("token", result.token);
+
       console.log(result.sucess);
       if (result && result.sucess) {
         setMessage("Login successful!");

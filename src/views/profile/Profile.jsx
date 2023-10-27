@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { getMeetups } from "../../api";
 import profileIcon from "../../assets/meetupLogo.svg";
 import Button from "../../components/button/Button";
 import Modal from "../../components/modal/Modal";
+// import MeetupItem from "../../components/meetupItem/MeetupItem";
+
 import "./Profile.css";
 
 function formatDate(dateString) {
@@ -21,12 +24,6 @@ function MeetupCard({ meetup, isPastMeetup, storedFeedback }) {
   const [showFeedbacks, setShowFeedbacks] = useState(false);
   const [feedback, setFeedback] = useState(storedFeedback || "");
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const saveFeedbackToLocalStorage = () => {
-    let feedbacks = JSON.parse(localStorage.getItem("meetupFeedbacks")) || {};
-    feedbacks[meetup.PK] = feedback;
-    localStorage.setItem("meetupFeedbacks", JSON.stringify(feedbacks));
-  };
 
   return (
     <div
@@ -56,7 +53,6 @@ function MeetupCard({ meetup, isPastMeetup, storedFeedback }) {
             <Button
               onClick={() => {
                 console.log(feedback);
-                saveFeedbackToLocalStorage();
                 setIsModalOpen(false);
                 setFeedback("");
               }}
@@ -79,34 +75,30 @@ function MeetupCard({ meetup, isPastMeetup, storedFeedback }) {
 }
 
 export default function Profile() {
-  const user = {
-    name: "Oscar Mattsson",
-    email: "oscar@gmail.com",
-    username: "ogge1337",
-  };
-
-  localStorage.setItem("loggedInUser", JSON.stringify(user));
-  const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser")) || {};
-
   const [registeredMeetups, setRegisteredMeetups] = useState([]);
   const [pastMeetups, setPastMeetups] = useState([]);
   const [feedbacks, setFeedbacks] = useState({});
+  const location = useLocation();
+  const userInfo = location.state.userInfo.user.Item;
+
+  const myMeetups = userInfo.registeredMeetups;
+
+  console.log(userInfo);
 
   useEffect(() => {
     setFeedbacks(JSON.parse(localStorage.getItem("meetupFeedbacks")) || {});
     async function fetchMeetups() {
       try {
-        const fetchedMeetups = await getMeetups();
-
+        const allMeetUps = await getMeetups();
         const currentDate = new Date();
-        const registered = fetchedMeetups.filter(
-          (meetup) => new Date(meetup.date) >= currentDate
+        const registeredMeetups = allMeetUps.filter((meetup) =>
+          myMeetups.includes(meetup.name)
         );
-        const past = fetchedMeetups.filter(
+        const past = allMeetUps.filter(
           (meetup) => new Date(meetup.date) < currentDate
         );
 
-        setRegisteredMeetups(registered);
+        setRegisteredMeetups(registeredMeetups);
         setPastMeetups(past);
       } catch (error) {
         console.error("Failed to fetch meetups:", error);
@@ -126,7 +118,7 @@ export default function Profile() {
               src={profileIcon}
               alt="profile-icon"
             />
-            <h2>{loggedInUser.username}</h2>
+            <h2>{userInfo.userName}</h2>
           </div>
         </div>
         <div className="profile-info">
