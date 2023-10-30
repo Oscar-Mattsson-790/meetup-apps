@@ -2,34 +2,60 @@ import { useState, useEffect } from "react";
 import MeetupItem from "../../components/meetupItem/MeetupItem";
 import { useNavigate } from "react-router-dom";
 import { getMeetups } from "../../api";
+import moment from "moment";
 
 export default function ListMeetup() {
   const navigate = useNavigate();
   const [meetups, setMeetups] = useState([]);
-  const [info, setInfo] = useState('');  
+
   useEffect(() => {
     async function meetupArr() {
-      const testMeetups = await getMeetups();
-      console.log(testMeetups);
-      setMeetups(testMeetups)
+      const listMeetups = await getMeetups();
+      // console.log(listMeetups);
+      setMeetups(listMeetups);
     }
-    meetupArr()
+    meetupArr();
   }, []);
+  
+  const today = moment();
+  const getUpcomingMeetups = meetups.filter((meetup) => 
+    today.isBefore(meetup.date)
+  )
 
-
-  const allMeetUps = meetups.map((meetup) => {
-    return <MeetupItem meetup={meetup} key={meetup.PK} getInfo={() => getInfo(meetup)} />
-  });
+  const getPastMeetups = meetups.filter((meetup) =>
+    today.isAfter(meetup.date)
+  )
 
   function getInfo(meetup) {
-    setInfo(meetup);
-    navigate(`/meetupInfo/${meetup.PK}`, {state: {meetup: meetup}})
+    navigate(`/meetupInfo/${meetup.PK}`, { state: { meetup: meetup } });
   }
 
+  const upcomingMeetups = getUpcomingMeetups.map((futureMeetup) => {
+    return (
+      <MeetupItem
+        meetup={futureMeetup}
+        key={futureMeetup.PK}
+        getInfo={() => getInfo(futureMeetup)}
+      />
+    );
+  });
+
+  const pastMeetups = getPastMeetups.map((pastMeetup) => {
+    return (
+      <MeetupItem
+        meetup={pastMeetup}
+        key={pastMeetup.PK}
+        getInfo={() => getInfo(pastMeetup)}
+      />
+    );
+  });
 
   return (
     <div className="list-page">
-      {allMeetUps}
+      <h1>Upcoming Meetups</h1>
+      {upcomingMeetups}
+      <h1>Past Meetups</h1>
+      {pastMeetups}
     </div>
-  );
+  )
 }

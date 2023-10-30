@@ -4,6 +4,8 @@ import meetupLogo from "../../assets/meetupLogo.svg";
 import searchSymbol from "../../assets/searchSymbol.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
+import { getUserInfo } from "../../api";
+
 import InputField from "../../components/inputField/InputField";
 import ArrowIcon from "../../assets/arrowIcon.svg";
 
@@ -12,6 +14,11 @@ export default function AppLayout() {
   const navigate = useNavigate();
   const path = location.pathname;
   const [showInputField, setShowInputField] = useState(false);
+
+  async function handleOnClick() {
+    const userInfo = await getUserInfo();
+    navigate(`/profile`, { state: { userInfo: userInfo } });
+  }
 
   return (
     <div className="main-container">
@@ -34,7 +41,7 @@ export default function AppLayout() {
             <img
               className="profile-icon-small"
               src={meetupLogo}
-              onClick={() => navigate("/profile")}
+              onClick={handleOnClick}
             />
           ) : (
             <div className="empty-div"></div>

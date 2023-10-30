@@ -48,3 +48,8 @@
     flex-direction: row;
     
 }
+
+.btn-container {
+    display: flex;
+    justify-content: space-between;
+}
