@@ -1,0 +1,29 @@
+.feedback-item {
+    background-color: #ebcfd3;
+    margin-bottom: 5px;
+    padding: 3px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.written-by {
+    font-weight: bold;
+    margin-bottom: 0;
+    font-size: 15px;
+}
+
+
+.rating-star {
+    font-size: 18px;
+    margin-right: 6px;
+    text-shadow: 1px 1px 1px  #020202, 
+    2px 2px 4px #1b1b1b;
+    color: white;
+}
+
+.rating-star.filled {
+    color: red;
+}
+
+.feedback {
+    font-size: 13px;
+}

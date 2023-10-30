@@ -54,6 +54,9 @@ export default function MeetupItem({meetup, getInfo}) {
                     <p className="city"> {meetup.city} </p>
                     <p className="date"> {meetupDate} </p>
                 </section>
+                {path === '/meetups' && (
+                    <Button onClick={getInfo}>More Info</Button>
+                )}
                 {path === '/profile' && pastMeetup  && (
                     <div>
                         <div className="btn-container">

@@ -48,7 +48,8 @@ export default function AppLayout() {
           )}
         </nav>
       </header>
-      <main>
+      <main> 
+        
         {path === "/meetups" && showInputField && (
           <InputField
             placeholder="Search for meetups or keywords"
