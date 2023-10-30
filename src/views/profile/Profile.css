@@ -51,7 +51,7 @@
   width: 100%;
 }
 
-.meetup-card {
+/* .meetup-card {
   width: 100%;
   background-color: #ffd8dd;
   margin: 15px 0;
@@ -73,9 +73,9 @@
 .meetup-details ul {
   list-style-type: disc;
   padding-left: 20px;
-}
+} */
 
-.textarea-icon-container {
+/* .textarea-icon-container {
   position: relative;
   width: 100%;
 }
@@ -88,4 +88,4 @@
   border-radius: 4px;
   font-family: "Fira Sans", sans-serif;
   resize: vertical;
-}
+} */

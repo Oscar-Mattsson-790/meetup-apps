@@ -8,11 +8,12 @@ export default function MeetupInfo() {
   // const [showFeedback, setShowFeedback] = useState(false)
   const location = useLocation();
   const info = location.state.meetup;
+  console.log(info)
   const today = moment();
   const meetupDate = moment(info.date).format("D MMM YYYY hh:m a");
 
   const checkDate = today.isAfter(meetupDate);
-  console.log(checkDate);
+ 
 
   const bookMeetup = async () => {
     const data = {
@@ -50,22 +51,9 @@ export default function MeetupInfo() {
           <p className="host"> Hosted by {info.host} </p>
         </div>
         <div className="detail-info">
-          <p className="topic">
-            {" "}
-            Where:{" "}
-            <span className="location">
-              {" "}
-              {info.city}, {info.location}{" "}
-            </span>{" "}
-          </p>
-          <p className="topic">
-            {" "}
-            When: <span className="date">{meetupDate}</span>{" "}
-          </p>
-          <p className="topic">
-            Available tickets:{" "}
-            <span className="tickets">{info.totalTickets}</span>{" "}
-          </p>
+          <p className="topic">Where: <span className="location"> {info.city}, {info.location}</span></p>
+          <p className="topic">When: <span className="date">{meetupDate}</span></p>
+          <p className="topic">Available tickets: <span className="tickets">{info.totalTickets}</span></p>
         </div>
       </div>
       <Button className="bookingBtn" onClick={bookMeetup}>
