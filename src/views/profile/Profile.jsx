@@ -3,13 +3,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { getMeetups } from "../../api";
 import profileIcon from "../../assets/meetupLogo.svg";
 import MeetupItem from "../../components/meetupItem/MeetupItem";
-
+import Button from "../../components/button/Button";
 import "./Profile.css";
 
 export default function Profile() {
   const [registeredMeetups, setRegisteredMeetups] = useState([]);
   const [pastMeetups, setPastMeetups] = useState([]);
-  const [feedbacks, setFeedbacks] = useState({});
   const navigate = useNavigate();
   const location = useLocation();
   const userInfo = location.state.userInfo.user.Item;
@@ -42,6 +41,10 @@ export default function Profile() {
     navigate(`/meetupInfo/${meetup.PK}`, { state: { meetup: meetup } });
   }
 
+  function backToMeetups() {
+    navigate('/meetups')
+  }
+
   return (
     <div className="profile-page">
       <div className="profile-container">
@@ -69,7 +72,8 @@ export default function Profile() {
             />
           ))}
         </div>
-      </div>
+      <Button onClick={backToMeetups}>Find Other Meetups</Button>
+      </div>    
     </div>
   );
 }

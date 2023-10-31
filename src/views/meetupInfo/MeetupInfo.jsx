@@ -1,46 +1,31 @@
 import "./MeetupInfo.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../../components/button/Button";
 import moment from "moment/moment";
-// import { useState } from "react";
+import RenderFeedback from "../../components/renderFeedback/RenderFeedback";
+import { bookMeetup } from "../../api";
 
 export default function MeetupInfo() {
-  // const [showFeedback, setShowFeedback] = useState(false)
+  const navigate = useNavigate();
   const location = useLocation();
   const info = location.state.meetup;
-  console.log(info)
+  const feedbackArr = info.feedbacks;
   const today = moment();
   const meetupDate = moment(info.date).format("D MMM YYYY hh:m a");
 
   const checkDate = today.isAfter(meetupDate);
- 
 
-  const bookMeetup = async () => {
-    const data = {
-      name: info.name,
-    };
+  const displayFeedback = feedbackArr.map((feedback,index) => {
+    return <RenderFeedback key={index} feedback={feedback}/>
+  })
 
-    try {
-      const token = localStorage.getItem("token");
-      const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/bookMeetup`,
-        {
-          method: "PUT",
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log(response);
+  async function handleBooking(name) {
+    await bookMeetup(name)
+  }
 
-      const result = await response.json();
-      console.log(result);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  function backToMeetups() {
+    navigate('/meetups')
+  }
 
   return (
     <div className="meetup-info">
@@ -56,10 +41,10 @@ export default function MeetupInfo() {
           <p className="topic">Available tickets: <span className="tickets">{info.totalTickets}</span></p>
         </div>
       </div>
-      <Button className="bookingBtn" onClick={bookMeetup}>
+      {checkDate ? displayFeedback : <Button className="bookingBtn" onClick={() => handleBooking(info.name)}>
         Get tickets
-      </Button>
-      {checkDate && <p>feedback</p>}
+      </Button>}
+      <Button onClick={backToMeetups}>Find Other Meetups</Button>
     </div>
   );
 }
