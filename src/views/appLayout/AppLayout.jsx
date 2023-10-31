@@ -14,6 +14,15 @@ export default function AppLayout() {
   const navigate = useNavigate();
   const path = location.pathname;
   const [showInputField, setShowInputField] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  function handleInputChange(event) {
+    setSearchQuery(event.target.value);
+  }
+
+  function handleSearchSubmit() {
+    console.log("Searching for:", searchQuery);
+  }
 
   async function handleOnClick() {
     const userInfo = await getUserInfo();
@@ -51,8 +60,11 @@ export default function AppLayout() {
       <main>
         {path === "/meetups" && showInputField && (
           <InputField
-            placeholder="Search for meetups or keywords"
+            value={searchQuery}
+            onChange={handleInputChange}
+            placeholder="Search for meetups"
             iconSrc={ArrowIcon}
+            iconOnClick={handleSearchSubmit}
           />
         )}
         <Outlet />
