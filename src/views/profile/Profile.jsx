@@ -18,7 +18,7 @@ export default function Profile() {
     async function fetchMeetups() {
       try {
         const allMeetUps = await getMeetups();
-  
+
         const currentDate = new Date();
         const registeredMeetups = allMeetUps.filter((meetup) =>
           myMeetups.includes(meetup.name)
@@ -61,7 +61,11 @@ export default function Profile() {
         <div className="profile-info">
           <h2>Registered Meetups</h2>
           {registeredMeetups.map((meetup) => (
-            <MeetupItem key={meetup.PK} meetup={meetup} getInfo={() => getInfo(meetup)} />
+            <MeetupItem
+              key={meetup.PK}
+              meetup={meetup}
+              getInfo={() => getInfo(meetup)}
+            />
           ))}
           <h2>Past Meetups</h2>
           {pastMeetups.map((meetup) => (

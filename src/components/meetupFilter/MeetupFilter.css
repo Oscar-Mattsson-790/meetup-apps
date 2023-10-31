@@ -1,0 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans:wght@200&family=PT+Sans&family=Playpen+Sans:wght@600&display=swap");
+
+.filter-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  background-color: #f2f2f2;
+}
+
+.filter-container {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  width: 250px;
+}
+
+.filter-input {
+  padding: 5px 10px;
+  border: 1px solid #d3d3d3;
+  border-radius: 4px;
+  font-family: "Fira Sans", sans-serif;
+  width: 100%;
+  transition: border-color 0.3s ease;
+  font-size: 14px;
+}
+
+.filter-input:focus {
+  border-color: #e53935;
+  outline: none;
+}
+
+.filter-input::placeholder {
+  color: #888;
+}
+
+.filter-button {
+  padding: 7px 15px;
+  background-color: #e53935;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Fira Sans", sans-serif;
+  font-size: 14px;
+}
+
+.filter-button:hover {
+  background-color: #d32f2f;
+}

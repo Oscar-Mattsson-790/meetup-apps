@@ -1,5 +1,3 @@
-import exp from "constants";
-
 export async function getMeetups() {
   try {
     const response = await fetch(`${import.meta.env.VITE_BASE_URL}/meetups`, {
@@ -7,7 +5,7 @@ export async function getMeetups() {
     });
 
     const result = await response.json();
-    // console.log(result);
+    console.log(result);
     return result;
   } catch (error) {
     console.error("Error fetching meetups:", error);
@@ -68,17 +66,14 @@ export async function postFeedback(feedbackItem) {
 
   try {
     const token = localStorage.getItem("token");
-    const response = await fetch(
-      `${import.meta.env.VITE_BASE_URL}/feedBack`,
-      {
-        method: "PUT",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await fetch(`${import.meta.env.VITE_BASE_URL}/feedBack`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
     console.log(response);
 
     const result = await response.json();
@@ -86,7 +81,7 @@ export async function postFeedback(feedbackItem) {
   } catch (error) {
     console.log(error);
   }
-};
+}
 
 export async function deleteBookedMeetup(name) {
   const data = {
@@ -113,6 +108,9 @@ export async function deleteBookedMeetup(name) {
   } catch (error) {
     console.log(error);
   }
+
+}
+
 };
 
 export async function bookMeetup(name) {
@@ -141,3 +139,4 @@ export async function bookMeetup(name) {
     console.log(error);
   }
 };
+
