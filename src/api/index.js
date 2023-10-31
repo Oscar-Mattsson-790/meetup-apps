@@ -108,4 +108,35 @@ export async function deleteBookedMeetup(name) {
   } catch (error) {
     console.log(error);
   }
+
 }
+
+};
+
+export async function bookMeetup(name) {
+  const data = {
+    name: name,
+  };
+
+  try {
+    const token = localStorage.getItem("token");
+    const response = await fetch(
+      `${import.meta.env.VITE_BASE_URL}/bookMeetup`,
+      {
+        method: "PUT",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log(response);
+
+    const result = await response.json();
+    console.log(result);
+  } catch (error) {
+    console.log(error);
+  }
+};
+

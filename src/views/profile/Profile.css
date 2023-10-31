@@ -51,6 +51,12 @@
   width: 100%;
 }
 
+.back-btn {
+  background-color: #e53935;
+  color: white;
+  border: none;
+}
+
 /* .meetup-card {
   width: 100%;
   background-color: #ffd8dd;

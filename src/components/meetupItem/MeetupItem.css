@@ -30,18 +30,9 @@
 .date {
     font-size: 12px;
     margin: 0;
+    margin-bottom: 3px;
 }
 
-.info-btn {
-    font-size: 11px;
-    padding: 1.5px;
-    background-color: #673970;
-    color: white;
-    border: none;
-    border-radius: 2px;
-    font-family: "PT Sans", sans-serif;
-    
-}
 
 .short-info {
     display: flex;
@@ -52,4 +43,5 @@
 .btn-container {
     display: flex;
     justify-content: space-between;
+    margin-top: 3px;
 }

@@ -57,7 +57,8 @@ export default function AppLayout() {
           )}
         </nav>
       </header>
-      <main>
+      <main> 
+        
         {path === "/meetups" && showInputField && (
           <InputField
             value={searchQuery}

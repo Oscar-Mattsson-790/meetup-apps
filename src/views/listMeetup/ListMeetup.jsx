@@ -18,11 +18,18 @@ export default function ListMeetup() {
   useEffect(() => {
     async function meetupArr() {
       const listMeetups = await getMeetups();
-      // console.log(listMeetups);
       setMeetups(listMeetups);
     }
     meetupArr();
+
   }, [filters]);
+
+
+  const today = moment();
+  const getUpcomingMeetups = meetups.filter((meetup) => 
+    today.isBefore(meetup.date)
+  )
+
 
   const applyFilters = (updatedFilters) => {
     setFilters(updatedFilters);
