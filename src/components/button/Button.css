@@ -1,6 +1,6 @@
 .custom-button {
   color: #fff;
-  background-color: #e53935;
+  background-color: #e53935 !important;
   padding: 8px 15px;
   border: none;
   border-radius: 4px;

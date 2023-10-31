@@ -1,45 +1,28 @@
 import "./MeetupItem.css"
 import Modal from "../modal/Modal"
 import Button from "../../components/button/Button";
-import FeedbackWithStars from "../feedback/Feedback";
-import InputField from "../inputField/InputField";
-import { deleteBookedMeetup, postFeedback } from "../../api";
+import { deleteBookedMeetup } from "../../api";
 import moment from "moment/moment"
 import { useLocation } from "react-router"
 import { useState } from "react"
 
 
 
-export default function MeetupItem({meetup, getInfo}) {
+export default function MeetupItem({meetup, showMeetupInfo}) {
     const [openPopup, setOpenPopup] = useState(false)
-    const [feedback, setFeedback] = useState('');
-    const [rating, setRating] = useState(0);
     const location = useLocation();
     const path = location.pathname;
     const today = moment();
-    const pastMeetup = today.isAfter(meetup.date)
-    const meetupDate = moment(meetup.date).format("D MMM YYYY hh:m a");
-    const futureMeetup = today.isBefore(meetup.date)
+   
+   // Format the meetup date
+   const formattedMeetupDate = moment(meetup.date).format("D MMM YYYY hh:m a");
+
+    // Determine if the meetup is in the past or future
+    const isMeetupInPast = today.isAfter(meetup.date);
+    const isMeetupInFuture = today.isBefore(meetup.date);
     
-
-    const handleStarClick = (rating) => {
-        setRating(rating)
-    }
-
-
-    const handleSubmit = async (rating, feedback, name, e) => {
-        e.preventDefault();
-        const feedbackItem = {
-            name: name,
-            rating: rating,
-            feedback: feedback
-        }
-        console.log(feedbackItem)
-        await postFeedback(feedbackItem)
-        setOpenPopup(false)
-        setFeedback('')
-        setRating(0)
-
+    function handleClosePopup () {
+        setOpenPopup(false); 
     }
 
     async function handleCancelBooking(name) {
@@ -52,46 +35,31 @@ export default function MeetupItem({meetup, getInfo}) {
                 <h1 className="meetup-name"> {meetup.name} </h1>
                 <section className="short-info">
                     <p className="city"> {meetup.city} </p>
-                    <p className="date"> {meetupDate} </p>
+                    <p className="date"> {formattedMeetupDate} </p>
                 </section>
                 {path === '/meetups' && (
-                    <Button onClick={getInfo}>More Info</Button>
+                    <Button onClick={showMeetupInfo}>More Info</Button>
                 )}
-                {path === '/profile' && pastMeetup  && (
+                {path === '/profile' && isMeetupInPast && (
                     <div>
                         <div className="btn-container">
-                            <Button onClick={getInfo}>More Info</Button>
+                            <Button onClick={showMeetupInfo}>More Info</Button>
                             <Button onClick={() => setOpenPopup(true)}>Send Feedback</Button>
                         </div>
-
-                        <Modal isOpen={openPopup} onClose={() => setOpenPopup(false)}>
-                        <FeedbackWithStars 
-                            rating={rating}
-                            onStarClick={handleStarClick}
-                            feedback={feedback}
-                            name={meetup.name}
-                        />
-                        <form onSubmit={(e) => {handleSubmit(rating, feedback, meetup.name, e)}}>
-                        <InputField
-                            type="text"
-                            placeholder="Enter your feedback"
-                            value={feedback}
-                            onChange={(e) => setFeedback(e.target.value)}
-                        />
-                        <Button type="submit">Submit</Button>
-                        </form>
+                        <Modal
+                            isOpen={openPopup} 
+                            onClick={() => setOpenPopup(false)} 
+                            name={meetup.name} 
+                            handlePopup={handleClosePopup} > 
                         </Modal>
                     </div>
                 )}
-                {path === '/profile' && futureMeetup && (
+                {path === '/profile' && isMeetupInFuture && (
                     <div className="btn-container">
-                        <Button onClick={getInfo}>More Info</Button>
+                        <Button onClick={showMeetupInfo}>More Info</Button>
                         <Button onClick={() => handleCancelBooking(meetup.name)}>Cancel booking</Button>
                     </div>
-                    
-
-                    
-                ) } 
+                )} 
             </div>
         </div>
     )

@@ -44,7 +44,6 @@ export default function MeetupInfo() {
       {checkDate ? displayFeedback : <Button className="bookingBtn" onClick={() => handleBooking(info.name)}>
         Get tickets
       </Button>}
-      <Button onClick={backToMeetups}>Find Other Meetups</Button>
     </div>
   );
 }

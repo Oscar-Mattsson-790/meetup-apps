@@ -8,24 +8,22 @@ import { getUserInfo } from "../../api";
 
 import InputField from "../../components/inputField/InputField";
 import ArrowIcon from "../../assets/arrowIcon.svg";
+import DropdownMenu from "../../components/dropdownMenu/DropdownMenu";
+import MeetupFilter from "../../components/meetupFilter/MeetupFilter";
 
 export default function AppLayout() {
   const location = useLocation();
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const path = location.pathname;
   const [showInputField, setShowInputField] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
 
-  function handleInputChange(event) {
-    setSearchQuery(event.target.value);
+  function handleSetShowInputField () {
+    setShowInputField(true)
   }
-
-  function handleSearchSubmit() {
-    console.log("Searching for:", searchQuery);
-  }
-
+  
   async function handleOnClick() {
     const userInfo = await getUserInfo();
+    console.log(userInfo)
     navigate(`/profile`, { state: { userInfo: userInfo } });
   }
 
@@ -46,12 +44,8 @@ export default function AppLayout() {
             <div className="empty-div"></div>
           )}
           <h1>Meetup</h1>
-          {path === "/meetups" || path.startsWith("/meetupInfo/") ? (
-            <img
-              className="profile-icon-small"
-              src={meetupLogo}
-              onClick={handleOnClick}
-            />
+          {path === "/meetups" || path.startsWith("/meetupInfo/") || path === "/profile" ? (
+            <DropdownMenu onClick={handleOnClick}/>
           ) : (
             <div className="empty-div"></div>
           )}
@@ -60,12 +54,9 @@ export default function AppLayout() {
       <main> 
         
         {path === "/meetups" && showInputField && (
-          <InputField
-            value={searchQuery}
-            onChange={handleInputChange}
+          <MeetupFilter
             placeholder="Search for meetups"
-            iconSrc={ArrowIcon}
-            iconOnClick={handleSearchSubmit}
+            isShowMeetupFilter={() => handleSetShowInputField()}
           />
         )}
         <Outlet />

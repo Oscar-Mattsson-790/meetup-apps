@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getMeetups } from "../../api";
-import profileIcon from "../../assets/meetupLogo.svg";
+import profileIcon from "../../assets/userIcon.svg";
 import MeetupItem from "../../components/meetupItem/MeetupItem";
 import Button from "../../components/button/Button";
 import "./Profile.css";
@@ -37,7 +37,7 @@ export default function Profile() {
     fetchMeetups();
   }, []);
 
-  function getInfo(meetup) {
+  function showMeetupInfo(meetup) {
     navigate(`/meetupInfo/${meetup.PK}`, { state: { meetup: meetup } });
   }
 
@@ -55,7 +55,7 @@ export default function Profile() {
               src={profileIcon}
               alt="profile-icon"
             />
-            <h2>{userInfo.userName}</h2>
+            <h1>{userInfo.userName}</h1>
           </div>
         </div>
         <div className="profile-info">
@@ -64,7 +64,7 @@ export default function Profile() {
             <MeetupItem
               key={meetup.PK}
               meetup={meetup}
-              getInfo={() => getInfo(meetup)}
+              showMeetupInfo={() => showMeetupInfo(meetup)}
             />
           ))}
           <h2>Past Meetups</h2>
@@ -72,11 +72,10 @@ export default function Profile() {
             <MeetupItem
               key={meetup.PK}
               meetup={meetup}
-              getInfo={() => getInfo(meetup)}
+              showMeetupInfo={() => showMeetupInfo(meetup)}
             />
           ))}
         </div>
-      <Button onClick={backToMeetups}>Find Other Meetups</Button>
       </div>    
     </div>
   );

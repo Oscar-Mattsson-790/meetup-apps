@@ -30,7 +30,6 @@ export async function getLogin(username, password) {
         },
       }
     );
-    // console.log(response);
 
     const result = await response.json();
     return result;
@@ -110,8 +109,6 @@ export async function deleteBookedMeetup(name) {
   }
 
 }
-
-};
 
 export async function bookMeetup(name) {
   const data = {
