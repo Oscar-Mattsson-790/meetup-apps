@@ -1,18 +1,34 @@
 import { useState } from "react";
 import "./MeetupFilter.css";
+import InputField from "../inputField/InputField";
 
-export default function MeetupFilter({ onApplyFilters }) {
+export default function MeetupFilter({ onApplyFilters, isShowMeetupFilter }) {
   const [date, setDate] = useState("");
   const [city, setCity] = useState("");
   const [name, setName] = useState("");
+  const [category, setCategory] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  
+console.log(isShowMeetupFilter)
+
+  function handleInputChange(event) {
+    setSearchQuery(event.target.value);
+    console.log(event.target.value)
+  }
 
   const handleApplyFilters = () => {
-    onApplyFilters({ date, city, name });
+    onApplyFilters({ date, city, name, category, searchQuery });
   };
 
   return (
     <div className="filter-page">
-      <div className="filter-container">
+      {isShowMeetupFilter && 
+        <div className="filter-container">
+        <InputField
+            value={searchQuery}
+            onChange={(e) => handleInputChange(e)}
+            placeholder="Search for meetups"
+        />
         <input
           type="date"
           value={date}
@@ -33,10 +49,23 @@ export default function MeetupFilter({ onApplyFilters }) {
           onChange={(e) => setName(e.target.value)}
           className="filter-input"
         />
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className="filter-input"
+        >
+          <option value="">All Categories</option>
+          <option value="Culture">Culture</option>
+          <option value="Sport">Sport</option>
+          <option value="Tech">Tech</option>
+        </select>
+
         <button onClick={handleApplyFilters} className="filter-button">
           Apply Filters
         </button>
       </div>
+      }
+      
     </div>
   );
 }

@@ -4,16 +4,21 @@ import { useNavigate } from "react-router-dom";
 import { getMeetups } from "../../api";
 import moment from "moment";
 import MeetupFilter from "../../components/meetupFilter/MeetupFilter";
+import "./ListMeetup.css"
 
 export default function ListMeetup() {
   const navigate = useNavigate();
   const [meetups, setMeetups] = useState([]);
+
+
+
   const [filters, setFilters] = useState({
     date: "",
     city: "",
     name: "",
+    category: "",
+    searchQuery: "",
   });
-  const today = moment();
 
   useEffect(() => {
     async function meetupArr() {
@@ -22,22 +27,19 @@ export default function ListMeetup() {
     }
     meetupArr();
 
-  }, [filters]);
+  }, []);
 
 
   const today = moment();
-  const getUpcomingMeetups = meetups.filter((meetup) => 
-    today.isBefore(meetup.date)
-  )
-
 
   const applyFilters = (updatedFilters) => {
     setFilters(updatedFilters);
   };
 
-  // const getUpcomingMeetups = meetups.filter((meetup) =>
-  //   today.isBefore(meetup.date)
-  // );
+  function showMeetupInfo(meetup) {
+    navigate(`/meetupInfo/${meetup.PK}`, { state: { meetup: meetup } });
+  }
+
 
   const getUpcomingMeetups = meetups.filter((meetup) => {
     const dateFilter =
@@ -48,37 +50,32 @@ export default function ListMeetup() {
     const nameFilter =
       !filters.name ||
       meetup.name.toLowerCase().includes(filters.name.toLowerCase());
+    const categoryFilter =
+      !filters.category || meetup.category === filters.category;
+    const searchQueryFilter =
+      !filters.searchQuery ||
+      meetup.keywords.includes(filters.searchQuery.toLowerCase())
+      console.log(meetup.keywords)
     return (
-      today.isBefore(meetup.date) && dateFilter && cityFilter && nameFilter
+      today.isBefore(meetup.date) && dateFilter && cityFilter && nameFilter && categoryFilter && searchQueryFilter
     );
   });
 
-  // const getPastMeetups = meetups.filter((meetup) => today.isAfter(meetup.date));
+  console.log("getUpcomingMeetups", getUpcomingMeetups)
 
-  const getPastMeetups = meetups.filter((meetup) => {
-    const dateFilter =
-      !filters.date || moment(meetup.date).isBefore(filters.date);
-    const cityFilter =
-      !filters.city ||
-      meetup.city.toLowerCase().includes(filters.city.toLowerCase());
-    const nameFilter =
-      !filters.name ||
-      meetup.name.toLowerCase().includes(filters.name.toLowerCase());
-    return today.isAfter(meetup.date) && dateFilter && cityFilter && nameFilter;
-  });
-
-  function getInfo(meetup) {
-    navigate(`/meetupInfo/${meetup.PK}`, { state: { meetup: meetup } });
-  }
 
   const upcomingMeetups = getUpcomingMeetups.map((futureMeetup) => {
     return (
       <MeetupItem
         meetup={futureMeetup}
         key={futureMeetup.PK}
-        getInfo={() => getInfo(futureMeetup)}
+        showMeetupInfo={() => showMeetupInfo(futureMeetup)}
       />
     );
+  });
+
+  const getPastMeetups = meetups.filter((meetup) => {
+    return today.isAfter(meetup.date);
   });
 
   const pastMeetups = getPastMeetups.map((pastMeetup) => {
@@ -86,16 +83,20 @@ export default function ListMeetup() {
       <MeetupItem
         meetup={pastMeetup}
         key={pastMeetup.PK}
-        getInfo={() => getInfo(pastMeetup)}
+        showMeetupInfo={() => showMeetupInfo(pastMeetup)}
       />
     );
   });
 
+  console.log(getUpcomingMeetups.length > 0)
   return (
     <div className="list-page">
-      <MeetupFilter onApplyFilters={applyFilters} />
+      <div className="meetup-filter-hidden">
+        <MeetupFilter  onApplyFilters={applyFilters} />
+      </div>
+
       <h1>Upcoming Meetups</h1>
-      {upcomingMeetups}
+      {getUpcomingMeetups.length > 0 ? upcomingMeetups : (<h1> No meetups found for the given values! </h1>)}
       <h1>Past Meetups</h1>
       {pastMeetups}
     </div>
