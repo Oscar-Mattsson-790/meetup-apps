@@ -41,9 +41,6 @@ export default function Profile() {
     navigate(`/meetupInfo/${meetup.PK}`, { state: { meetup: meetup } });
   }
 
-  function backToMeetups() {
-    navigate('/meetups')
-  }
 
   return (
     <div className="profile-page">

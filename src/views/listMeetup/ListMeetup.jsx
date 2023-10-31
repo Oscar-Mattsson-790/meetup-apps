@@ -55,13 +55,13 @@ export default function ListMeetup() {
     const searchQueryFilter =
       !filters.searchQuery ||
       meetup.keywords.includes(filters.searchQuery.toLowerCase())
-      console.log(meetup.keywords)
+      // console.log(meetup.keywords)
     return (
       today.isBefore(meetup.date) && dateFilter && cityFilter && nameFilter && categoryFilter && searchQueryFilter
     );
   });
 
-  console.log("getUpcomingMeetups", getUpcomingMeetups)
+  // console.log("getUpcomingMeetups", getUpcomingMeetups)
 
 
   const upcomingMeetups = getUpcomingMeetups.map((futureMeetup) => {
@@ -88,7 +88,7 @@ export default function ListMeetup() {
     );
   });
 
-  console.log(getUpcomingMeetups.length > 0)
+  // console.log(getUpcomingMeetups.length > 0)
   return (
     <div className="list-page">
       <div className="meetup-filter-hidden">

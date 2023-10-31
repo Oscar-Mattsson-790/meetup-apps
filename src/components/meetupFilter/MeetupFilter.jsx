@@ -9,7 +9,7 @@ export default function MeetupFilter({ onApplyFilters, isShowMeetupFilter }) {
   const [category, setCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   
-console.log(isShowMeetupFilter)
+// console.log(isShowMeetupFilter)
 
   function handleInputChange(event) {
     setSearchQuery(event.target.value);
