@@ -18,20 +18,11 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const userDetails = {
-      username: username,
-      password: password,
-    };
-
-    console.log(userDetails);
-
     try {
       const result = await getLogin(username, password);
-      console.log("View result: ", result);
 
       localStorage.setItem("token", result.token);
 
-      console.log(result.sucess);
       if (result && result.sucess) {
         setMessage("Login successful!");
         navigate("/meetups");
@@ -41,7 +32,6 @@ export default function Login() {
         setMessage("Login failed! Please try again.");
       }
     } catch (error) {
-      console.error("Error during login:", error);
       setMessage("An error occurred. Please try again.");
     }
   };

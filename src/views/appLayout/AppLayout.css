@@ -39,10 +39,6 @@ header {
   padding: 10px 0;
   text-align: center;
   height: 100%;
-
-  :last-child {
-    margin: 0;
-  }
 }
 
 main {

@@ -2,14 +2,13 @@ import { useState } from "react";
 import "./MeetupFilter.css";
 import InputField from "../inputField/InputField";
 
-export default function MeetupFilter({ onApplyFilters, isShowMeetupFilter }) {
+export default function MeetupFilter({ onApplyFilters }) {
   const [date, setDate] = useState("");
   const [city, setCity] = useState("");
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  
-console.log(isShowMeetupFilter)
+
 
   function handleInputChange(event) {
     setSearchQuery(event.target.value);
@@ -22,7 +21,6 @@ console.log(isShowMeetupFilter)
 
   return (
     <div className="filter-page">
-      {isShowMeetupFilter && 
         <div className="filter-container">
         <InputField
             value={searchQuery}
@@ -64,8 +62,6 @@ console.log(isShowMeetupFilter)
           Apply Filters
         </button>
       </div>
-      }
-      
     </div>
   );
 }
