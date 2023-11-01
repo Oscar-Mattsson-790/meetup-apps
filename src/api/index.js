@@ -53,7 +53,7 @@ export async function getSignup(userDetails) {
 
     const result = await response.json();
 
-   return result
+    return result;
   } catch (error) {
     throw new Error(error);
   }
@@ -128,7 +128,6 @@ export async function deleteBookedMeetup(name) {
   } catch (error) {
     console.log(error);
   }
-
 }
 
 export async function bookMeetup(name) {
@@ -156,5 +155,4 @@ export async function bookMeetup(name) {
   } catch (error) {
     console.log(error);
   }
-};
-
+}
