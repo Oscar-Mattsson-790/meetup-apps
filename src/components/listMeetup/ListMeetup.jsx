@@ -1,9 +1,4 @@
-import { useState, useEffect } from "react";
-import MeetupItem from "../../components/meetupItem/MeetupItem";
-import { useNavigate } from "react-router-dom";
-import { getMeetups } from "../../api";
 
-import MeetupFilter from "../../components/meetupFilter/MeetupFilter";
 import "./ListMeetup.css"
 
 export default function ListMeetup({upcomingMeetups, pastMeetups}) {

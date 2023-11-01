@@ -39,10 +39,6 @@ export default function MeetupInfo() {
     return <RenderFeedback key={index} feedback={feedback}/>
   })
 
-  // async function handleBooking(name) {
-  //   await bookMeetup(name)
-  //   setOpenPopup(true)
-  // }
   async function confirmBooking(name) {
     await bookMeetup(name)
     setRegisteredPeople(registeredPeople + 1)
