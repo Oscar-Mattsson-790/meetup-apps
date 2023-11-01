@@ -38,6 +38,27 @@ export async function getLogin(username, password) {
   }
 }
 
+export async function getSignup(userDetails) {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_BASE_URL}/user/signup`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userDetails),
+      }
+    );
+
+    const result = await response.json();
+
+   return result
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
 export async function getUserInfo() {
   try {
     const token = localStorage.getItem("token");

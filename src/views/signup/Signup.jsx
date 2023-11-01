@@ -4,10 +4,10 @@ import Button from "../../components/button/Button";
 import InputField from "../../components/inputField/InputField";
 import "./Signup.css";
 import danceLogoSignup from "../../assets/danceLogoSignup.png";
-
 import mailIcon from "../../assets/mailIcon.svg";
 import lockIcon from "../../assets/lockIcon.svg";
 import userIcon from "../../assets/userIcon.svg";
+import { getSignup } from "../../api";
 
 export default function Signup() {
   const [username, setUsername] = useState("");
@@ -19,38 +19,20 @@ export default function Signup() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-
+   
     const userDetails = {
       userName: username,
       email: email,
       password: password,
     };
-
-    console.log(userDetails);
-
+    const result = await getSignup(userDetails)
     try {
-      const response = await fetch(
-        "https://tmlbv7ux12.execute-api.eu-north-1.amazonaws.com/api/user/signup",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(userDetails),
-        }
-      );
-
-      const responseData = await response.json();
-
-      if (response && responseData.sucess) {
+      if (result && result.sucess) {
         setMessage("Registration successful!");
         navigate("/");
-      } else {
-        setMessage(responseData.message || "Signup failed. Please try again.");
-      }
+      } 
     } catch (error) {
-      console.error("There was an error signing up:", error);
-      setMessage("An error occurred. Please try again later.");
+      setMessage(error || "Signup failed. Please try again.");
     }
 
     setUsername("");

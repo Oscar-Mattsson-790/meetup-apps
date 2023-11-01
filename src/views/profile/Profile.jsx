@@ -3,7 +3,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { getMeetups } from "../../api";
 import profileIcon from "../../assets/userIcon.svg";
 import MeetupItem from "../../components/meetupItem/MeetupItem";
-import Button from "../../components/button/Button";
 import "./Profile.css";
 
 export default function Profile() {
@@ -39,10 +38,6 @@ export default function Profile() {
 
   function showMeetupInfo(meetup) {
     navigate(`/meetupInfo/${meetup.PK}`, { state: { meetup: meetup } });
-  }
-
-  function backToMeetups() {
-    navigate('/meetups')
   }
 
   return (
