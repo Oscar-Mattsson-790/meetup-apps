@@ -23,7 +23,7 @@ export default function Login() {
 
       localStorage.setItem("token", result.token);
 
-      if (result && result.sucess) {
+      if (result && result.success) {
         setMessage("Login successful!");
         navigate("/meetups");
         setUsername("");

@@ -36,6 +36,13 @@ export default function Profile() {
     fetchMeetups();
   }, []);
 
+  function handleBookingCancelled(meetupName) {
+    const updatedMeetups = registeredMeetups.filter(
+      (meetup) => meetup.name !== meetupName
+    );
+    setRegisteredMeetups(updatedMeetups);
+  }
+
   function showMeetupInfo(meetup) {
     navigate(`/meetupInfo/${meetup.PK}`, { state: { meetup: meetup } });
   }
@@ -60,6 +67,7 @@ export default function Profile() {
               key={meetup.PK}
               meetup={meetup}
               showMeetupInfo={() => showMeetupInfo(meetup)}
+              onCancelBooking={handleBookingCancelled}
             />
           ))}
           <h2>Past Meetups</h2>
@@ -71,7 +79,7 @@ export default function Profile() {
             />
           ))}
         </div>
-      </div>    
+      </div>
     </div>
   );
 }
