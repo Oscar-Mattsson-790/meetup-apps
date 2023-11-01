@@ -53,7 +53,7 @@ export default function MeetupItem({
             </div>
             <Modal
               isOpen={openPopup}
-              onClick={() => setOpenPopup(false)}
+              onClose={() => setOpenPopup(false)}
               name={meetup.name}
               handlePopup={handleClosePopup}
             ></Modal>

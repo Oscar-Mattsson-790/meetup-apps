@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 export default function MeetupInfo() {
   const [meetupInfo, setMeetupInfo] = useState({});
   const [feedback, setFeedback] = useState([]);
+  const [registeredPeople, setRegisteredPeople] = useState(0);
   const location = useLocation();
   const meetupPK = location.state.meetup.PK;
   const today = moment();
@@ -27,7 +28,7 @@ export default function MeetupInfo() {
     }
     meetupArr();
 
-  }, []);
+  }, [registeredPeople]);
 
   const maxGuests = meetupInfo.registeredPeople+meetupInfo.totalTickets;
 
@@ -37,6 +38,7 @@ export default function MeetupInfo() {
 
   async function handleBooking(name) {
     await bookMeetup(name)
+    setRegisteredPeople(registeredPeople + 1)
   }
 
 
