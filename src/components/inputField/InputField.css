@@ -1,0 +1,25 @@
+.input-icon-container {
+  position: relative;
+  width: 100%;
+}
+
+.input-icon {
+  position: absolute;
+  right: 10px;
+  top: 35%;
+  transform: translateY(-50%);
+  height: 16px;
+  width: 16px;
+  pointer-events: none;
+}
+
+.custom-input {
+  padding: 8px 12px;
+  padding-right: 35px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 2px solid #d3d3d3;
+  border-radius: 4px;
+  font-family: "Fira Sans", sans-serif;
+  margin-bottom: 15px;
+}

@@ -1,0 +1,45 @@
+.feedback-container {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    /* box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); */
+  }
+  
+  .feedback-text {
+    font-size: 20px;
+    font-style: italic;
+  }
+  
+  .star {
+    cursor: pointer;
+    font-size: 28px;
+    margin-right: 6px;
+    /* text-shadow: 0 3px 5px rgba(144, 116, 116, 0.6); */
+    text-shadow: 1px 1px 1px  #020202, 
+    2px 2px 4px #1b1b1b;
+    color: white;
+    transition: color 0.5s ease;
+  }
+  
+
+  .star.filled {
+    color: red;
+  }
+
+
+  
+
+  /* .star:hover ~ .star {
+
+    color: red;
+  }  */
+
+  /* .star.filled {
+    color: yellow;
+  } */
+  
+  /* Hover effect */
+  /* .star:hover,
+  .star:hover ~ .star.filled {
+    color: red; 
+  } */
