@@ -12,7 +12,7 @@ import "./App.css";
 function App() {
   return (
     <div className="App">
-      <BrowserRouter basename="meetup-apps">
+      <BrowserRouter basename="">
         <Routes>
           <Route path="/" element={<AppLayout />}>
             <Route index element={<Login />} />
