@@ -5,6 +5,8 @@ import Profile from "./views/profile/Profile";
 import Home from "./views/home/Home";
 import MeetupInfo from "./views/meetupInfo/MeetupInfo";
 import AppLayout from "./views/appLayout/AppLayout";
+
+//styles
 import "./App.css";
 
 function App() {
