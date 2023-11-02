@@ -3,7 +3,7 @@ name: meetup-apps
 on:
   push:
     branches:
-      - dev
+      - main
 
 permissions:
   contents: read
