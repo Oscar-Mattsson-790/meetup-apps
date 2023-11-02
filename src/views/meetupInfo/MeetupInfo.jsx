@@ -5,11 +5,13 @@ import moment from "moment/moment";
 import RenderFeedback from "../../components/renderFeedback/RenderFeedback";
 import { bookMeetup, getMeetups } from "../../api";
 import { useEffect, useState } from "react";
+import Popup from "../../components/popoup/popup";
 
 export default function MeetupInfo() {
   const [meetupInfo, setMeetupInfo] = useState({});
   const [feedback, setFeedback] = useState([]);
   const [registeredPeople, setRegisteredPeople] = useState(0);
+  const [openPopup, setOpenPopup] = useState(false);
   const location = useLocation();
   const meetupPK = location.state.meetup.PK;
   const today = moment();
@@ -31,14 +33,16 @@ export default function MeetupInfo() {
   }, [registeredPeople]);
 
   const maxGuests = meetupInfo.registeredPeople+meetupInfo.totalTickets;
-
+  const ticketsLeft = meetupInfo.totalTickets > 0;
+  
   const displayFeedback = feedback.map((feedback,index) => {
     return <RenderFeedback key={index} feedback={feedback}/>
   })
 
-  async function handleBooking(name) {
+  async function confirmBooking(name) {
     await bookMeetup(name)
     setRegisteredPeople(registeredPeople + 1)
+    setOpenPopup(false)
   }
 
 
@@ -56,9 +60,11 @@ export default function MeetupInfo() {
           <p className="topic">Available tickets: <span className="tickets">{checkDate ? 0 : meetupInfo.totalTickets}/{maxGuests}</span></p>
         </div>
       </div>
-      {checkDate ? displayFeedback : <Button className="bookingBtn" onClick={() => handleBooking(meetupInfo.name)}>
-        Get tickets
-      </Button>}
+      {checkDate ? displayFeedback : 
+        <Button className="bookingBtn" onClick={() => setOpenPopup(true)}>Get tickets</Button>
+      }
+      {ticketsLeft && openPopup ? <Popup message='Click Confirm to book your ticket' closePopup={() => confirmBooking(meetupInfo.name)} btnText='Confirm' /> 
+      : openPopup ? <Popup message='Tickets are sold out' closePopup={() => setOpenPopup(false)} btnText='Got it!' /> : null }
     </div>
   );
 }
